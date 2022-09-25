@@ -27,7 +27,7 @@ def webhook():
     LEVERAGE = data["LEV"]
     orederID=data["orderID"]
     print(LEVERAGE)
-    client.futures_change_leverage(symbol=symbol, leverage=LEVERAGE)
+    client.futures_change_leverage(symbol=symbol, leverage=3)
 
 
     client.futures_cancel_all_open_orders(symbol=symbol)
