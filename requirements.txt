@@ -1,0 +1,8 @@
+flask
+gunicorn
+python-binance
+requests
+aiohttp
+selenium
+bs4
+ccxt
