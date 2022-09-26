@@ -30,7 +30,7 @@ def webhook():
 
 
 
-    if Direction=="BUY" and Position_size=="0" and (orderID=="Enter_Long_Trend" or orderID=="Enter_Short_Trend"):
+    if Direction=="BUY" and Position_size=="0" and (orderID=="Enter_Long_Trend"):
 
 
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
