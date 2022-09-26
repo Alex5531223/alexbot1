@@ -5,9 +5,9 @@ from binance.enums import *
 
 app = Flask(__name__)
 symbol = 'BTCBUSD'
-api_key = 'beUKPB5PA5CPmuE4OvCdW16iQJkL6ZzpfUc6uQEzCv9gsHZxIazCzGA2cpxBqOuy'
-api_secret = 'NcUIjv55zeaZTfSYWNZwqwyyYvaJ0CPMFNTUgppVyz2EyfIrRdT5pTiC7ZXAydfr'
-client = Client(api_key, api_secret, testnet=False)
+api_key = '12d15a558ea00f21a1526acdea6c34b12974deb44e3d2a66675c8c19a8188163'
+api_secret = 'fabdda6763a3a539ea316b9fb149e9711c6b04d933a826c28e1fee94351aa178'
+client = Client(api_key, api_secret, testnet=True)
 
 @app.route("/")
 def helloworld():
@@ -25,7 +25,7 @@ def webhook():
     orederID=data["orderID"]
     Position_size=data["position_size"]
     #print(LEVERAGE)
-    client.futures_change_leverage(symbol=symbol, leverage=1)
+    client.futures_change_leverage(symbol=symbol, leverage=3)
     aaa=client.futures_symbol_ticker(symbol=symbol)
     print(aaa)
     client.futures_cancel_all_open_orders(symbol=symbol)
