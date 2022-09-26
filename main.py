@@ -16,40 +16,40 @@ def helloworld():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = json.loads(request.data)
-    #print(data['bar']["open"])
+    client.futures_cancel_all_open_orders(symbol=symbol)
     Etryprice=data["EN"]
     STprice=data["ST"]
     TPprice=data["TP"]
-    SIZE=0.001
-    LEVERAGE = data["LEV"]
-    orederID=data["orderID"]
-    Position_size=data["position_size"]
-    #print(LEVERAGE)
-    client.futures_change_leverage(symbol=symbol, leverage=3)
-    aaa=client.futures_symbol_ticker(symbol=symbol)
-    print(aaa)
-    client.futures_cancel_all_open_orders(symbol=symbol)
-    #client.future_can
+    SIZE=data["SIZE"]
+    LEV= data["LEV"]
+    orderID=data["orderID"]
+    Direction=data["Direction"].upper()
+    print(Direction)
+    Position_size=data["strategypositionsize"]
+    client.futures_change_leverage(symbol=symbol, leverage=1)
 
-    if orederID=="BUY" and Position_size=="0":
 
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP', quantity=SIZE, price=Etryprice, stopPrice=Etryprice, timeInForce='GTC')
+
+    if Direction=="BUY" and Position_size=="0" and (orderID=="Enter_Long_Trend" or orderID=="Enter_Short_Trend"):
+
+
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
         profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice)
 
-    if orederID=="SELL" and Position_size=="0":
 
-        buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP', quantity=SIZE, price=Etryprice,stopPrice=Etryprice,timeInForce='GTC')
+
+    if Direction=="SELL" and Position_size=="0" and (orderID=="Enter_Short_Trend"):
+
+        buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
         profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice)
 
 
-    #print(Position_size)
-    #print(data["strategy"]["order_action"])
     return {
         "code": "success",
         "massage": data
