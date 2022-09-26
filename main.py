@@ -32,7 +32,7 @@ def webhook():
     #client.future_can
 
     if orederID=="BUY" and Position_size=="0":
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice , timeInForce='GTC')
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP', quantity=SIZE, price=Etryprice , stopPrice=Etryprice, timeInForce='GTC')
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
@@ -40,7 +40,7 @@ def webhook():
 
     if orederID=="SELL" and Position_size=="0":
 
-        buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=Etryprice ,timeInForce='GTC')
+        buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP', quantity=SIZE, price=Etryprice,stopPrice=Etryprice,timeInForce='GTC')
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
