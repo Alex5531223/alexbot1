@@ -21,7 +21,7 @@ def webhook():
     STprice=data["ST"]
     TPprice=data["TP"]
     SIZE=data["SIZE"]
-    LEV= 3
+    LEV= 30
     orderID=data["orderID"]
     Direction=data["Direction"].upper()
     print(Direction)
