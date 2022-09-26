@@ -5,9 +5,9 @@ from binance.enums import *
 
 app = Flask(__name__)
 symbol = 'BTCBUSD'
-api_key = '12d15a558ea00f21a1526acdea6c34b12974deb44e3d2a66675c8c19a8188163'
-api_secret = 'fabdda6763a3a539ea316b9fb149e9711c6b04d933a826c28e1fee94351aa178'
-client = Client(api_key, api_secret, testnet=True)
+api_key = 'ugJb7zbU1SpExOwcXV3yr9cmlKbE4eJ9q0hTWTo8JBoM3uaIePYN6IX86mihTkLY'
+api_secret = 'y6Jys0yb2PQnzLWTGfnEGDiZ8HW4SccJ6xVdSRB1tEAJWj2MPIWj9Pu3zpGOxGY2'
+client = Client(api_key, api_secret, testnet=False)
 
 @app.route("/")
 def helloworld():
@@ -26,11 +26,11 @@ def webhook():
     Direction=data["Direction"].upper()
     print(Direction)
     Position_size=data["strategypositionsize"]
-    client.futures_change_leverage(symbol=symbol, leverage=1)
+    client.futures_change_leverage(symbol=symbol, leverage=3)
 
 
 
-    if Direction=="BUY" and Position_size=="1" and (orderID=="Enter_Long_Trend"):
+    if Direction=="BUY"  and (orderID=="Enter_Long_Trend"):
 
 
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
@@ -41,7 +41,7 @@ def webhook():
 
 
 
-    if Direction=="SELL" and Position_size=="-1" and (orderID=="Enter_Short_Trend"):
+    if Direction=="SELL"  and (orderID=="Enter_Short_Trend"):
 
         buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
