@@ -20,8 +20,8 @@ def webhook():
     Etryprice=data["EN"]
     STprice=data["ST"]
     TPprice=data["TP"]
-    SIZE=data["SIZE"]
-    LEV= 30
+    SIZE=0.001
+    LEV= 3
     orderID=data["orderID"]
     Direction=data["Direction"].upper()
     print(Direction)
