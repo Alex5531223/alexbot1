@@ -16,7 +16,7 @@ def helloworld():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = json.loads(request.data)
-    client.futures_cancel_all_open_orders(symbol=symbol)
+
     Etryprice=data["EN"]
     STprice=data["ST"]
     TPprice=data["TP"]
@@ -32,6 +32,7 @@ def webhook():
 
     if Direction=="BUY"  and (orderID=="Enter_Long_Trend"):
 
+        client.futures_cancel_all_open_orders(symbol=symbol)
 
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
@@ -42,6 +43,9 @@ def webhook():
 
 
     if Direction=="SELL"  and (orderID=="Enter_Short_Trend"):
+
+
+        client.futures_cancel_all_open_orders(symbol=symbol)
 
         buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
