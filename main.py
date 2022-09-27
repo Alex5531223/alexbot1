@@ -24,8 +24,6 @@ def webhook():
     LEV= 3
     orderID=data["orderID"]
     Direction=data["Direction"].upper()
-    print(Direction)
-    Position_size=data["strategypositionsize"]
     client.futures_change_leverage(symbol=symbol, leverage=3)
 
 
