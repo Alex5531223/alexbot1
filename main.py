@@ -34,7 +34,7 @@ def webhook():
 
         client.futures_cancel_all_open_orders(symbol=symbol)
 
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC', postOnly=True)
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
