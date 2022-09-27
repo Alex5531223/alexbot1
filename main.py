@@ -5,8 +5,8 @@ from binance.enums import *
 
 app = Flask(__name__)
 symbol = 'BTCBUSD'
-api_key = 'FeQRkHLOp6U0rlaVSz4nhdqwGXKHUh2CWt7tMr7SZ2WYmFobCLn8QECC1cDIXxDm'
-api_secret = 'SkuqJrk1Jg1FNWsaxIVTmfB3QDqvDVJxZnga71572EnhHjHjzfn9Ngy6W2DO2uhq'
+api_key = '12d15a558ea00f21a1526acdea6c34b12974deb44e3d2a66675c8c19a8188163'
+api_secret = 'fabdda6763a3a539ea316b9fb149e9711c6b04d933a826c28e1fee94351aa178'
 client = Client(api_key, api_secret, testnet=False)
 
 @app.route("/")
@@ -24,6 +24,8 @@ def webhook():
     LEV= 3
     orderID=data["orderID"]
     Direction=data["Direction"].upper()
+    print(Direction)
+    #Position_size=data["strategypositionsize"]
     client.futures_change_leverage(symbol=symbol, leverage=3)
 
 
@@ -32,11 +34,14 @@ def webhook():
 
         client.futures_cancel_all_open_orders(symbol=symbol)
 
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC')
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=Etryprice, timeInForce='GTC', postOnly=True)
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice)
+        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
+
+        #profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice, postOnly=True)
+
 
 
 
@@ -49,7 +54,9 @@ def webhook():
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice)
+        #profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='TAKE_PROFIT', quantity=SIZE, price=TPprice, stopPrice=TPprice)
+
+        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
 
 
     return {
