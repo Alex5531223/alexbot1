@@ -5,11 +5,9 @@ from binance.enums import *
 
 app = Flask(__name__)
 symbol = 'BTCBUSD'
-# api_key = 'kZGgziDenC8TFJIXxJZ4gY77Q2B0nVrQiC3PLftLpLns8pjDiyRLZQrgHSebr5Ds'
-# api_secret = 'LTmwFOBobewVvLHJJymspPp5RuiNo8bMPXsKkLBXIYfZRbWQZLegTH6T4Nnk44lf'
+api_key = 'kZGgziDenC8TFJIXxJZ4gY77Q2B0nVrQiC3PLftLpLns8pjDiyRLZQrgHSebr5Ds'
+api_secret = 'LTmwFOBobewVvLHJJymspPp5RuiNo8bMPXsKkLBXIYfZRbWQZLegTH6T4Nnk44lf'
 
-api_key = '12d15a558ea00f21a1526acdea6c34b12974deb44e3d2a66675c8c19a8188163'
-api_secret = 'fabdda6763a3a539ea316b9fb149e9711c6b04d933a826c28e1fee94351aa178'
 
 client = Client(api_key, api_secret, testnet=True)
 
