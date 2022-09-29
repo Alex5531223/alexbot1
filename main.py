@@ -1,4 +1,4 @@
-import json, websocket, binance.client
+import json, binance.client
 from flask import Flask, request
 from binance.client import Client
 from binance.enums import *
@@ -51,7 +51,7 @@ def webhook():
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
+        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC')#, postOnly=True)
 
 
     if Direction=="SELL"  and (orderID=="Enter_Short_Trend"):
@@ -63,7 +63,7 @@ def webhook():
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
+        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC')#, postOnly=True)
 
     return {
         "code": "success",
