@@ -42,7 +42,7 @@ def webhook():
     # print(wsapp)
     # wsapp.run_forever()
 
-    if Direction=="BUY"  and (orderID=="Enter_Long_Trend"):
+    if Direction=="BUY"  and (orderID=="Enter_Long_Trend" or orderID=="Enter_Long_Hoffman" ):
 
 
         client.futures_cancel_all_open_orders(symbol=symbol)
@@ -54,7 +54,7 @@ def webhook():
         profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
 
 
-    if Direction=="SELL"  and (orderID=="Enter_Short_Trend"):
+    if Direction=="SELL"  and (orderID=="Enter_Short_Trend" or orderID=="Enter_Short_Hoffman" or orderID=="Enter_Short_Hull" or orderID=="Enter_Short_TrendB"):
 
 
         client.futures_cancel_all_open_orders(symbol=symbol)
