@@ -43,8 +43,8 @@ def webhook():
 
 
         client.futures_cancel_all_open_orders(symbol=symbol)
-
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=SIZE)
+        
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=EN_long, timeInForce='GTC', postOnly=True)
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
@@ -55,8 +55,8 @@ def webhook():
 
 
         client.futures_cancel_all_open_orders(symbol=symbol)
-
-        buyorder = client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=SIZE)
+        
+        sellorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=EN_short, timeInForce='GTC', postOnly=True)
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
