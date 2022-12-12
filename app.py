@@ -17,8 +17,6 @@ def helloworld():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = json.loads(request.data)
-    # order_open_symbol =client.futures_account()['positions'][14]['positionAmt']
-    # print(order_open_symbol)
 
     EN_long=data["EN_long"]
     EN_short = data["EN_short"]
@@ -29,18 +27,12 @@ def webhook():
     orderID=data["orderID"]
     Direction=data["Direction"].upper()
     print(Direction)
-    #Position_size=data["strategypositionsize"]
     client.futures_change_leverage(symbol=symbol, leverage=3)
 
     def on_message(wsapp, message):
         print(message)
 
-    # wsapp = websocket.WebSocketApp("wss://stream.binance.com:9443/ws/btcbusd@kline_<im>", on_message=on_message)
-    # print(wsapp)
-    # wsapp.run_forever()
-
     if Direction=="BUY"  and (orderID=="Enter_Long_Trend" or orderID=="Enter_Long_Hoffman" ):
-
 
         client.futures_cancel_all_open_orders(symbol=symbol)
         
