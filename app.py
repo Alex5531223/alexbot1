@@ -44,11 +44,14 @@ def webhook():
 
         client.futures_cancel_all_open_orders(symbol=symbol)
         
+        cancel_open_positions1=client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=0.1, reduceOnly=TRUE)
+        cancel_open_positions2=client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=0.1, reduceOnly=TRUE)
+        
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=EN_long, timeInForce='GTC', postOnly=True)
 
         stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
+        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTX')
 
 
     if Direction=="SELL"  and (orderID=="Enter_Short_Trend" or orderID=="Enter_Short_Hoffman" or orderID=="Enter_Short_Hull" or orderID=="Enter_Short_TrendB"):
@@ -56,11 +59,14 @@ def webhook():
 
         client.futures_cancel_all_open_orders(symbol=symbol)
         
+        cancel_open_positions1=client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=0.1, reduceOnly=TRUE)
+        cancel_open_positions2=client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=0.1, reduceOnly=TRUE)
+        
         sellorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=EN_short, timeInForce='GTC', postOnly=True)
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTC', postOnly=True)
+        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTX')
 
     return {
         "code": "success",
