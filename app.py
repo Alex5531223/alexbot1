@@ -8,62 +8,63 @@ symbol = 'BTCBUSD'
 api_key = 'fJ4B9BOBssdgKeGyBnRJMlaJTRrggnrFswL3BqAYustX1TfdRm4kCQeYsuZNmRx8'
 api_secret = 'Xliy9ruF3Ux9t9Yowe5ZBMv1eL0OtVJ8whyk4fDJFl52MMTPGFoK8bO0GnQdEwY3'
 
+# api_key = '12d15a558ea00f21a1526acdea6c34b12974deb44e3d2a66675c8c19a8188163'
+# api_secret = 'fabdda6763a3a539ea316b9fb149e9711c6b04d933a826c28e1fee94351aa178'
+
+
+
 client = Client(api_key, api_secret, testnet=False)
+
 
 @app.route("/")
 def helloworld():
     return 'hello world'
 
+
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = json.loads(request.data)
 
-    EN_long=data["EN_long"]
+    EN_long = data["EN_long"]
     EN_short = data["EN_short"]
-    STprice=data["ST"]
-    TPprice=data["TP"]
-    SIZE=data["SIZE"]
-    LEV= 3
-    orderID=data["orderID"]
-    Direction=data["Direction"].upper()
+    STprice = data["ST"]
+    TPprice = data["TP"]
+    SIZE = data["SIZE"]
+    LEV = 3
+    orderID = data["orderID"]
+    Direction = data["Direction"].upper()
     print(Direction)
     client.futures_change_leverage(symbol=symbol, leverage=3)
 
     def on_message(wsapp, message):
         print(message)
 
-    if Direction=="BUY"  and (orderID=="Enter_Long_Trend" or orderID=="Enter_Long_Hoffman" ):
-
+    if Direction == "BUY" and (orderID == "Enter_Long_Trend" or orderID == "Enter_Long_Hoffman"):
         client.futures_cancel_all_open_orders(symbol=symbol)
-        
-#         cancel_open_positions1=client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=0.1, reduceOnly=TRUE)
-#         cancel_open_positions2=client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=0.1, reduceOnly=TRUE)
-        
-        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=EN_long, timeInForce='GTC', postOnly=True)
 
-        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
+        buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=SIZE)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTX')
+        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE,
+                                                stopPrice=STprice, reduceOnly=True)
 
+        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TRAILING_STOP_MARKET', quantity=SIZE,activationPrice=TPprice, callbackrate=0.1, reduceOnly=True)
 
-    if Direction=="SELL"  and (orderID=="Enter_Short_Trend" or orderID=="Enter_Short_Hoffman" or orderID=="Enter_Short_Hull" or orderID=="Enter_Short_TrendB"):
-
-
+    if Direction == "SELL" and (orderID == "Enter_Short_Trend" or orderID == "Enter_Short_Hoffman" or orderID == "Enter_Short_Hull" or orderID == "Enter_Short_TrendB"):
         client.futures_cancel_all_open_orders(symbol=symbol)
-        
-#         cancel_open_positions1=client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=0.1, reduceOnly=TRUE)
-#         cancel_open_positions2=client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=0.1, reduceOnly=TRUE)
-        
-        sellorder = client.futures_create_order(symbol=symbol, side='SELL', type='LIMIT', quantity=SIZE, price=EN_short, timeInForce='GTC', postOnly=True)
 
-        stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE, stopPrice=STprice)
+        sellorder = client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=SIZE)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='LIMIT', quantity=SIZE, price=TPprice, timeInForce='GTX')
+        stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE,
+                                                stopPrice=STprice, reduceOnly=True)
+
+        profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='TRAILING_STOP_MARKET',
+                                                  quantity=SIZE, activationPrice=TPprice, callbackrate=0.1, reduceOnly=True)
 
     return {
         "code": "success",
         "massage": data
     }
+
 
 if __name__ == "__main__":
     app.run(debug=True)
