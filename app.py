@@ -44,8 +44,7 @@ def webhook():
 
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=SIZE)
 
-        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE,
-                                                stopPrice=STprice, reduceOnly=True)
+        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE,stopPrice=STprice, reduceOnly=True)
 
         profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TRAILING_STOP_MARKET', quantity=SIZE,activationPrice=TPprice, callbackrate=0.1, reduceOnly=True)
 
