@@ -44,9 +44,9 @@ def webhook():
 
         buyorder = client.futures_create_order(symbol=symbol, side='BUY', type='MARKET', quantity=SIZE)
 
-        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE,stopPrice=STprice, reduceOnly=True)
+        stoporder = client.futures_create_order(symbol=symbol, side='SELL', type='STOP_MARKET', quantity=SIZE,stopPrice=STprice)
 
-        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TRAILING_STOP_MARKET', quantity=SIZE,activationPrice=TPprice, callbackrate=0.1, reduceOnly=True)
+        profitorder = client.futures_create_order(symbol=symbol, side='SELL', type='TRAILING_STOP_MARKET', quantity=SIZE,activationPrice=TPprice, callbackrate=0.1)
 
     if Direction == "SELL" and (orderID == "Enter_Short_Trend" or orderID == "Enter_Short_Hoffman" or orderID == "Enter_Short_Hull" or orderID == "Enter_Short_TrendB"):
         client.futures_cancel_all_open_orders(symbol=symbol)
@@ -54,10 +54,10 @@ def webhook():
         sellorder = client.futures_create_order(symbol=symbol, side='SELL', type='MARKET', quantity=SIZE)
 
         stoporder = client.futures_create_order(symbol=symbol, side='BUY', type='STOP_MARKET', quantity=SIZE,
-                                                stopPrice=STprice, reduceOnly=True)
+                                                stopPrice=STprice)
 
         profitorder = client.futures_create_order(symbol=symbol, side='BUY', type='TRAILING_STOP_MARKET',
-                                                  quantity=SIZE, activationPrice=TPprice, callbackrate=0.1, reduceOnly=True)
+                                                  quantity=SIZE, activationPrice=TPprice, callbackrate=0.1)
 
     return {
         "code": "success",
