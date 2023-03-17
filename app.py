@@ -4,7 +4,7 @@ from binance.client import Client
 from binance.enums import *
 
 app = Flask(__name__)
-symbol = 'BTCBUSD'
+symbol = 'ETHBUSD'
 #Bi
 api_key = '3RpKcpn6LuDlDkBJbh5i5MBUS4PFxsVu3sFMF6LsXV0HNy9FFm8sLrVouKbdsMyb'
 api_secret = 'dApSSaXcmZQEVCYgFMSnJ5dvVE7P6UiSrkoPmJ3yBYlWBg3MOUoeALIbWAMWWR8b'
