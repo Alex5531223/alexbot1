@@ -32,6 +32,9 @@ def webhook():
     STprice = data["ST"]
     TPprice = data["TP"]
     SIZE = data["SIZE"]
+    if float(SIZE)<0.003:
+        SIZE=0.003
+        SIZE=str(0.003)
     LEV = 3
     orderID = data["orderID"]
     Direction = data["Direction"].upper()
